@@ -1,0 +1,89 @@
+.login-bs-backdrop.modal-backdrop.show {
+  background-color: rgba(26, 29, 41, 0.5);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.login-bs-modal-dialog.modal-dialog {
+  max-width: min(880px, 94vw);
+  width: 100%;
+}
+
+.login-bs-modal-dialog .modal-content {
+  border: none;
+  border-radius: 0.875rem;
+  overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .login-bs-modal .modal-dialog {
+    margin: 0;
+    max-width: 100%;
+    min-height: auto;
+    align-items: flex-end;
+    min-height: 100dvh;
+    padding: 0;
+  }
+
+  .login-bs-modal-dialog .modal-content {
+    border-radius: 1rem 1rem 0 0;
+    max-height: min(92dvh, 720px);
+  }
+}
+
+.login-bs-brand {
+  background-color: #53b987;
+  min-height: 11rem;
+}
+
+@media (min-width: 768px) {
+  .login-bs-brand {
+    min-height: 0;
+  }
+}
+
+.login-bs-continue {
+  background-color: #53b987;
+  border-color: #53b987;
+  font-weight: 700;
+}
+
+.login-bs-continue:hover,
+.login-bs-continue:focus,
+.login-bs-continue:active {
+  background-color: #449e74 !important;
+  border-color: #449e74 !important;
+}
+
+.login-bs-heading {
+  color: #44475b;
+}
+
+.login-bs-underline.form-control {
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #dee2e6;
+  padding-left: 0;
+  padding-right: 0;
+  box-shadow: none;
+  color: #44475b;
+}
+
+.login-bs-underline.form-control:focus {
+  border-color: #53b987;
+  box-shadow: none;
+}
+
+.login-bs-underline.is-invalid {
+  border-bottom-color: #dc3545;
+}
+
+.login-bs-form-col {
+  max-height: min(70vh, 560px);
+}
+
+@media (min-width: 768px) {
+  .login-bs-form-col {
+    max-height: none;
+  }
+}
