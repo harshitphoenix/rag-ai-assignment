@@ -3,16 +3,12 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
-import { useAuth } from '../hooks/useAuth';
 import Layout from '../components/Layout';
 import { analyticsData, conditionDistribution } from '../services/mockData';
 
 const PIE_COLORS = ['#2563eb', '#7c3aed', '#059669', '#d97706', '#6b7280'];
 
 export default function Analytics() {
-  const { loading } = useAuth();
-  if (loading) return null;
-
   return (
     <Layout>
       <div className="px-6 py-6 max-w-6xl mx-auto">
@@ -28,7 +24,7 @@ export default function Analytics() {
             { label: 'Total Discharges', value: '294', sub: 'Last 6 months' },
             { label: 'Avg Occupancy', value: '78%', sub: 'Bed utilisation' },
           ].map((s) => (
-            <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-5">
+            <div key={s.label} className="bg-white rounded-[var(--radius-ui)] border border-gray-200 p-5">
               <p className="text-xs text-gray-400 uppercase tracking-wide">{s.label}</p>
               <p className="text-3xl font-bold text-gray-900 mt-1">{s.value}</p>
               <p className="text-xs text-gray-400 mt-0.5">{s.sub}</p>
@@ -37,7 +33,7 @@ export default function Analytics() {
         </div>
 
         {/* Line chart */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
+        <div className="bg-white rounded-[var(--radius-ui)] border border-gray-200 p-5 mb-6">
           <h2 className="font-semibold text-gray-800 mb-4">Admissions vs Discharges</h2>
           <ResponsiveContainer width="100%" height={260}>
             <LineChart data={analyticsData}>
@@ -54,7 +50,7 @@ export default function Analytics() {
 
         {/* Bar + Pie row */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="bg-white rounded-[var(--radius-ui)] border border-gray-200 p-5">
             <h2 className="font-semibold text-gray-800 mb-4">Critical Cases per Month</h2>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={analyticsData}>
@@ -62,12 +58,12 @@ export default function Analytics() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Bar dataKey="critical" fill="#ef4444" radius={[4, 4, 0, 0]} name="Critical" />
+                <Bar dataKey="critical" fill="#ef4444" radius={[6, 6, 0, 0]} name="Critical" />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div className="bg-white rounded-[var(--radius-ui)] border border-gray-200 p-5">
             <h2 className="font-semibold text-gray-800 mb-4">Condition Distribution</h2>
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>

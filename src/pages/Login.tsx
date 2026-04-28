@@ -1,19 +1,27 @@
 import React, { useCallback, useId, useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import CloseButton from 'react-bootstrap/CloseButton';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import Row from 'react-bootstrap/Row';
+import { X } from 'lucide-react';
+import { Alert, AlertDescription } from '../components/ui/alert';
+import { Button } from '../components/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '../components/ui/dialog';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
 import { useAuthStore } from '../store/authStore';
 import { useAuth } from '../hooks/useAuth';
-import './login-bs-modal.css';
+import { cn } from '../lib/utils';
+
+const accent = '#53b987';
+const heading = '#44475b';
 
 function TopoPattern({ patternId }: { patternId: string }) {
   return (
     <svg
-      className="position-absolute top-0 start-0 w-100 h-100 text-white opacity-25"
+      className="pointer-events-none absolute inset-0 h-full w-full text-white/25"
       aria-hidden
       preserveAspectRatio="xMidYMid slice"
     >
@@ -31,6 +39,9 @@ function TopoPattern({ patternId }: { patternId: string }) {
     </svg>
   );
 }
+
+const underlineInput =
+  'rounded-none border-0 border-b border-slate-200 bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-[#53b987]';
 
 export default function Login() {
   useAuth(false);
@@ -62,54 +73,60 @@ export default function Login() {
   };
 
   return (
-    <Modal
-      show
-      onHide={tryDismiss}
-      centered
-      scrollable
-      backdropClassName="login-bs-backdrop"
-      className="login-bs-modal"
-      dialogClassName="login-bs-modal-dialog"
-      contentClassName="shadow-lg"
-      keyboard
-      enforceFocus
-      restoreFocus
-    >
-      <Modal.Body className="p-0">
-        <Row className="g-0 flex-column flex-md-row">
-          <Col md={5} className="login-bs-brand position-relative d-flex flex-column justify-content-between text-white p-4 p-md-5">
+    <Dialog open onOpenChange={(next) => !next && tryDismiss()}>
+      <DialogContent className="p-0">
+        <DialogClose asChild>
+          <button
+            type="button"
+            className="absolute right-3 top-3 z-[60] rounded-[var(--radius-ui)] p-1 text-slate-500 opacity-80 transition-opacity hover:bg-slate-100 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+            aria-label="Close"
+            onClick={tryDismiss}
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </DialogClose>
+
+        <div className="flex max-h-[min(92vh,720px)] flex-col md:max-h-[min(640px,90vh)] md:flex-row">
+          <div
+            className="relative flex min-h-[11rem] w-full shrink-0 flex-col justify-between p-6 text-white md:w-[42%] md:min-h-0 md:p-8"
+            style={{ backgroundColor: accent }}
+          >
             <TopoPattern patternId={topoPatternId} />
-            <div className="position-relative" style={{ zIndex: 1 }}>
-              <p className="fw-bold fs-5 mb-0 lh-sm">Simple, secure care.</p>
+            <div className="relative z-[1]">
+              <p className="text-xl font-bold leading-snug md:text-2xl">Simple, secure care.</p>
             </div>
-            <div className="position-relative d-flex align-items-center gap-2" style={{ zIndex: 1 }}>
-              <span className="d-inline-block rounded-1 bg-white opacity-75" style={{ width: '1rem', height: '1rem' }} aria-hidden />
-              <span className="fw-bold fs-5" style={{ letterSpacing: '0.04em' }}>EHR</span>
+            <div className="relative z-[1] flex items-center gap-2">
+              <span
+                className="inline-block size-4 shrink-0 rounded-[var(--radius-ui)] bg-white/90"
+                aria-hidden
+              />
+              <span className="text-lg font-bold" style={{ letterSpacing: '0.04em' }}>
+                EHR
+              </span>
             </div>
-          </Col>
+          </div>
 
-          <Col md={7} className="position-relative bg-white">
-            <CloseButton
-              className="position-absolute top-0 end-0 m-3"
-              aria-label="Close"
-              onClick={tryDismiss}
-            />
-
-            <div className="login-bs-form-col px-4 pt-5 pb-4 px-md-5 pt-md-4 pb-md-5 overflow-auto">
-              <h2
-                id="login-dialog-title"
-                className="text-center fw-bold fs-4 mb-4 login-bs-heading"
+          <div className="relative flex min-h-0 flex-1 flex-col bg-white">
+            <div className="max-h-[min(70vh,560px)] overflow-y-auto overscroll-contain px-6 pb-6 pt-12 md:max-h-none md:px-8 md:pb-8 md:pt-10">
+              <DialogTitle
+                className="mb-8 text-center text-xl font-bold md:text-[22px]"
+                style={{ color: heading }}
               >
                 Welcome to HealthOS
-              </h2>
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                Sign in with your email and password to open the HealthOS dashboard.
+              </DialogDescription>
 
               <Button
-                variant="outline-secondary"
+                type="button"
+                variant="outline"
                 disabled
                 title="Sign-in with Google is not enabled in this build"
-                className="w-100 d-flex align-items-center justify-content-center gap-2 py-3 opacity-75"
+                className="w-full gap-2 py-6 opacity-70"
+                style={{ color: heading }}
               >
-                <svg className="flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+                <svg className="size-5 shrink-0" viewBox="0 0 24 24" aria-hidden>
                   <path
                     fill="#4285F4"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -130,22 +147,25 @@ export default function Login() {
                 Continue with Google
               </Button>
 
-              <div className="d-flex align-items-center gap-3 my-4">
-                <hr className="flex-grow-1 opacity-25 m-0" />
-                <span className="small text-secondary text-nowrap">Or</span>
-                <hr className="flex-grow-1 opacity-25 m-0" />
+              <div className="my-6 flex items-center gap-3">
+                <div className="h-px flex-1 bg-slate-200" />
+                <span className="text-xs font-medium text-slate-400">Or</span>
+                <div className="h-px flex-1 bg-slate-200" />
               </div>
 
               {error && (
-                <Alert variant="danger" className="py-2 small mb-4" role="alert">
-                  {error}
+                <Alert variant="destructive" className="mb-4 py-2">
+                  <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
-              <Form onSubmit={handleSubmit} noValidate>
-                <Form.Group className="mb-4" controlId="login-email">
-                  <Form.Label visuallyHidden>Your email address</Form.Label>
-                  <Form.Control
+              <form onSubmit={handleSubmit} noValidate className="flex flex-col">
+                <div className="mb-4">
+                  <Label htmlFor="login-email" className="sr-only">
+                    Your email address
+                  </Label>
+                  <Input
+                    id="login-email"
                     type="email"
                     autoComplete="email"
                     value={email}
@@ -154,15 +174,21 @@ export default function Login() {
                       clearError();
                     }}
                     placeholder="Your Email Address"
-                    isInvalid={!!fieldErrors.email}
-                    className="login-bs-underline"
+                    aria-invalid={!!fieldErrors.email}
+                    className={cn(underlineInput, fieldErrors.email && 'border-red-400')}
+                    style={{ color: heading }}
                   />
-                  <Form.Control.Feedback type="invalid">{fieldErrors.email}</Form.Control.Feedback>
-                </Form.Group>
+                  {fieldErrors.email && (
+                    <p className="mt-2 text-xs text-red-600">{fieldErrors.email}</p>
+                  )}
+                </div>
 
-                <Form.Group className="mb-4" controlId="login-password">
-                  <Form.Label visuallyHidden>Password</Form.Label>
-                  <Form.Control
+                <div className="mb-6">
+                  <Label htmlFor="login-password" className="sr-only">
+                    Password
+                  </Label>
+                  <Input
+                    id="login-password"
                     type="password"
                     autoComplete="current-password"
                     value={password}
@@ -171,44 +197,51 @@ export default function Login() {
                       clearError();
                     }}
                     placeholder="Password"
-                    isInvalid={!!fieldErrors.password}
-                    className="login-bs-underline"
+                    aria-invalid={!!fieldErrors.password}
+                    className={cn(underlineInput, fieldErrors.password && 'border-red-400')}
+                    style={{ color: heading }}
                   />
-                  <Form.Control.Feedback type="invalid">{fieldErrors.password}</Form.Control.Feedback>
-                </Form.Group>
+                  {fieldErrors.password && (
+                    <p className="mt-2 text-xs text-red-600">{fieldErrors.password}</p>
+                  )}
+                </div>
 
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-100 py-3 text-white login-bs-continue border-0"
+                  className="w-full py-6 text-base font-bold text-white shadow-sm hover:opacity-95"
+                  style={{ backgroundColor: accent, borderColor: accent }}
                 >
                   {loading ? 'Signing in…' : 'Continue'}
                 </Button>
-              </Form>
+              </form>
 
-              <p className="text-center small mt-4 mb-0 px-1 lh-sm login-bs-heading" style={{ fontSize: '0.7rem' }}>
+              <p
+                className="mt-6 text-center text-[11px] leading-relaxed md:mt-8 md:text-xs"
+                style={{ color: heading }}
+              >
                 By proceeding, I agree to{' '}
-                <Button variant="link" className="p-0 align-baseline text-decoration-underline login-bs-heading" style={{ fontSize: 'inherit' }}>
+                <Button type="button" variant="link" className="h-auto p-0 text-[11px] md:text-xs" style={{ color: heading }}>
                   Terms
                 </Button>
                 ,{' '}
-                <Button variant="link" className="p-0 align-baseline text-decoration-underline login-bs-heading" style={{ fontSize: 'inherit' }}>
+                <Button type="button" variant="link" className="h-auto p-0 text-[11px] md:text-xs" style={{ color: heading }}>
                   Privacy Policy
                 </Button>
                 {' & '}
-                <Button variant="link" className="p-0 align-baseline text-decoration-underline login-bs-heading" style={{ fontSize: 'inherit' }}>
+                <Button type="button" variant="link" className="h-auto p-0 text-[11px] md:text-xs" style={{ color: heading }}>
                   Data use
                 </Button>
                 .
               </p>
 
-              <p className="text-center text-muted mt-3 mb-0" style={{ fontSize: '0.65rem' }}>
+              <p className="mt-3 text-center text-[10px] text-slate-400 md:text-[11px]">
                 Demo: demo@health.com · demo123
               </p>
             </div>
-          </Col>
-        </Row>
-      </Modal.Body>
-    </Modal>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

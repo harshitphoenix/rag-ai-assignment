@@ -1,5 +1,12 @@
 import { create } from 'zustand';
 import { User } from 'firebase/auth';
+import {
+  devLoginWithEmail,
+  devLogout,
+  persistMockUserEmail,
+  readMockSessionUser,
+  shouldUseDevMockAuth,
+} from '../services/devAuth';
 import { loginWithEmail, logout as firebaseLogout, onAuthChange } from '../services/firebase';
 import { schedulePatientAlerts } from '../services/notifications';
 
@@ -34,17 +41,27 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (email, password) => {
     set({ error: null, loading: true });
     try {
+      if (shouldUseDevMockAuth()) {
+        const user = await devLoginWithEmail(email, password);
+        persistMockUserEmail(user.email ?? '');
+        set({ user, loading: false, error: null });
+        schedulePatientAlerts();
+        return;
+      }
       await loginWithEmail(email, password);
       schedulePatientAlerts();
     } catch (err: any) {
-      // Set error in state — never re-throw so Firebase errors stay contained
       set({ error: friendlyMessage(err), loading: false });
     }
   },
 
   logout: async () => {
     try {
-      await firebaseLogout();
+      if (shouldUseDevMockAuth()) {
+        await devLogout();
+      } else {
+        await firebaseLogout();
+      }
     } catch {
       // ignore logout errors
     }
@@ -52,6 +69,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   init: () => {
+    if (shouldUseDevMockAuth()) {
+      set({ user: readMockSessionUser(), loading: false, error: null });
+      return () => {};
+    }
     try {
       return onAuthChange(
         (user) => set({ user, loading: false }),

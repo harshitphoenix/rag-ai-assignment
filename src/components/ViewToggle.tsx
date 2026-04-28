@@ -8,10 +8,10 @@ interface Props {
 
 export default function ViewToggle({ view, onChange }: Props) {
   return (
-    <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+    <div className="flex items-center gap-1 bg-gray-100 rounded-[var(--radius-ui)] p-1">
       <button
         onClick={() => onChange('grid')}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition ${
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-ui)] text-sm font-medium transition ${
           view === 'grid' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
         }`}
       >
@@ -23,7 +23,7 @@ export default function ViewToggle({ view, onChange }: Props) {
       </button>
       <button
         onClick={() => onChange('list')}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition ${
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-ui)] text-sm font-medium transition ${
           view === 'list' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
         }`}
       >

@@ -1,15 +1,11 @@
 import React from 'react';
-import { useAuth } from '../hooks/useAuth';
 import { usePatientStore } from '../store/patientStore';
 import Layout from '../components/Layout';
 import ViewToggle from '../components/ViewToggle';
 import { PatientGridCard, PatientListRow } from '../components/PatientCard';
 
 export default function PatientDetails() {
-  const { loading } = useAuth();
   const { view, search, setView, setSearch, filteredPatients } = usePatientStore();
-
-  if (loading) return null;
 
   const patients = filteredPatients();
 
@@ -39,7 +35,7 @@ export default function PatientDetails() {
             placeholder="Search by name, condition, or doctor…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+            className="w-full pl-9 pr-4 py-2.5 rounded-[var(--radius-ui)] border border-gray-300 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
           />
         </div>
 
@@ -49,7 +45,7 @@ export default function PatientDetails() {
             <button
               key={s}
               onClick={() => setSearch(s === 'all' ? '' : s)}
-              className={`px-3 py-1 rounded-full text-xs font-medium capitalize transition ${
+              className={`px-5 py-2 rounded-[var(--radius-ui)] text-sm font-medium capitalize transition ${
                 (s === 'all' && !search) || search === s
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -73,7 +69,7 @@ export default function PatientDetails() {
             {patients.map((p) => <PatientGridCard key={p.id} patient={p} />)}
           </div>
         ) : (
-          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-[var(--radius-ui)] border border-gray-200 overflow-hidden">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-50">

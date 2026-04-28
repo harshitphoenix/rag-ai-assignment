@@ -10,7 +10,7 @@ export default function NotFound() {
         <p className="text-sm text-gray-400 mt-1">The page you're looking for doesn't exist.</p>
         <Link
           to="/dashboard"
-          className="inline-block mt-5 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition"
+          className="inline-block mt-5 px-4 py-2 bg-blue-600 text-white text-sm rounded-[var(--radius-ui)] hover:bg-blue-700 transition"
         >
           Back to Dashboard
         </Link>

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --radius-ui: 6px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

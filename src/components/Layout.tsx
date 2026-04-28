@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <aside className="w-60 bg-white border-r border-gray-200 flex flex-col shrink-0">
         {/* Brand */}
         <div className="flex items-center gap-3 px-5 py-5 border-b border-gray-100">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-blue-600 rounded-[var(--radius-ui)] flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -60,7 +60,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-ui)] text-sm font-medium transition ${
                   isActive
                     ? 'bg-blue-50 text-blue-700'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
@@ -88,7 +88,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-[var(--radius-ui)] transition"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}

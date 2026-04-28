@@ -10,12 +10,12 @@ const statusConfig = {
 export function PatientGridCard({ patient }: { patient: Patient }) {
   const status = statusConfig[patient.status];
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition">
+    <div className="bg-white rounded-[var(--radius-ui)] border border-gray-200 p-5 hover:shadow-md transition">
       <div className="flex items-start justify-between mb-3">
         <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold">
           {patient.name[0]}
         </div>
-        <span className={`text-xs font-medium px-2 py-1 rounded-full ${status.className}`}>
+        <span className={`text-xs font-medium px-2 py-1 rounded-[var(--radius-ui)] ${status.className}`}>
           {status.label}
         </span>
       </div>
@@ -47,7 +47,7 @@ export function PatientListRow({ patient }: { patient: Patient }) {
       </td>
       <td className="px-4 py-3 text-sm text-gray-600">{patient.condition}</td>
       <td className="px-4 py-3">
-        <span className={`text-xs font-medium px-2 py-1 rounded-full ${status.className}`}>
+        <span className={`text-xs font-medium px-2 py-1 rounded-[var(--radius-ui)] ${status.className}`}>
           {status.label}
         </span>
       </td>
